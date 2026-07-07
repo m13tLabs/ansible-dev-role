@@ -1,0 +1,19 @@
+---
+- name: Setup Ansible
+  include_tasks: ansible-setup.yml
+  tags: [ansible]
+
+- name: Setup sudoers
+  include_tasks: sudoers.yml
+  tags: [sudoers]
+
+- name: Setup dotfiles
+  include_tasks: dotfiles.yml
+  tags: [dotfiles]
+
+- name: Setup nvm
+  ansible.builtin.import_role:
+    name: mare.nvm
+  tags:
+    - nodejs
+    - nvm

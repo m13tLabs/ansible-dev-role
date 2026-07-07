@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  role_name: dev
+  author: Martin Reinhardt
+  description: Generic Linux/macOS developer workstation base setup
+  min_ansible_version: "2.5"
+  license: MIT
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+    - name: GenericLinux
+      versions:
+        - all
+  galaxy_tags:
+    - development
+    - system

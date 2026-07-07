@@ -1,0 +1,159 @@
+---
+- name: Verify
+  hosts: all
+  vars:
+    nvm_user: testuser
+    nvm_dest: /home/testuser/.nvm
+    nvm_node_version: "20.11.0"
+  tasks:
+    # ansible-setup.yml
+    - name: Check Ansible downloads directory exists
+      ansible.builtin.stat:
+        path: "/home/{{ nvm_user }}/Downloads"
+      register: downloads_stat
+
+    - name: Assert Ansible downloads directory exists
+      ansible.builtin.assert:
+        that:
+          - downloads_stat.stat.exists
+          - downloads_stat.stat.isdir
+        fail_msg: "Downloads directory missing at /home/{{ nvm_user }}/Downloads"
+
+    - name: Check /etc/ansible/ansible.cfg was rolled out
+      ansible.builtin.stat:
+        path: /etc/ansible/ansible.cfg
+      register: ansible_cfg_stat
+
+    - name: Assert /etc/ansible/ansible.cfg exists
+      ansible.builtin.assert:
+        that:
+          - ansible_cfg_stat.stat.exists
+        fail_msg: "/etc/ansible/ansible.cfg was not rolled out"
+
+    # sudoers.yml
+    - name: Validate /etc/sudoers with visudo
+      ansible.builtin.command: visudo -cf /etc/sudoers
+      changed_when: false
+
+    - name: Check /etc/sudoers contains our managed defaults
+      ansible.builtin.command: grep -c 'Defaults        env_reset' /etc/sudoers
+      register: sudoers_grep
+      changed_when: false
+      failed_when: false
+
+    - name: Assert /etc/sudoers was rolled out from our template
+      ansible.builtin.assert:
+        that:
+          - sudoers_grep.stdout | int > 0
+        fail_msg: "/etc/sudoers does not contain the managed 'env_reset' default"
+
+    # dotfiles.yml
+    - name: Check .vimrc was rolled out
+      ansible.builtin.stat:
+        path: "/home/{{ nvm_user }}/.vimrc"
+      register: vimrc_stat
+
+    - name: Assert .vimrc exists
+      ansible.builtin.assert:
+        that:
+          - vimrc_stat.stat.exists
+        fail_msg: ".vimrc missing at /home/{{ nvm_user }}/.vimrc"
+
+    - name: Check .bashrc and .profile were rendered from the generic profile
+      ansible.builtin.command: "grep -c 'alias gs=' /home/{{ nvm_user }}/{{ item }}"
+      loop:
+        - .bashrc
+        - .profile
+      register: profile_grep
+      changed_when: false
+      failed_when: false
+
+    - name: Assert .bashrc and .profile contain generic profile content
+      ansible.builtin.assert:
+        that:
+          - item.stdout | int > 0
+        fail_msg: "{{ item.item }} does not contain the generic profile content (alias gs=...)"
+      loop: "{{ profile_grep.results }}"
+
+    - name: Check the generic profile stayed free of mac-only content
+      ansible.builtin.command: "grep -c 'pbcopy' /home/{{ nvm_user }}/.bashrc"
+      register: mac_only_grep
+      changed_when: false
+      failed_when: false
+
+    - name: Assert no mac-only content leaked into the generic profile
+      ansible.builtin.assert:
+        that:
+          - mac_only_grep.stdout | int == 0
+        fail_msg: ".bashrc unexpectedly contains mac-only content (pbcopy) - this role should only ship the generic profile"
+
+    # mare.nvm (imported role)
+    - name: Check .nvm directory exists
+      ansible.builtin.stat:
+        path: "{{ nvm_dest }}"
+      register: nvm_dir_stat
+
+    - name: Assert .nvm directory exists with correct permissions
+      ansible.builtin.assert:
+        that:
+          - nvm_dir_stat.stat.exists
+          - nvm_dir_stat.stat.isdir
+          - nvm_dir_stat.stat.mode == "0755"
+          - nvm_dir_stat.stat.pw_name == nvm_user
+        fail_msg: ".nvm directory missing or has wrong permissions/ownership at {{ nvm_dest }}"
+
+    - name: Check nvm.sh exists (NVM installer was executed)
+      ansible.builtin.stat:
+        path: "{{ nvm_dest }}/nvm.sh"
+      register: nvm_sh_stat
+
+    - name: Assert nvm.sh is present
+      ansible.builtin.assert:
+        that:
+          - nvm_sh_stat.stat.exists
+        fail_msg: >
+          nvm.sh not found at {{ nvm_dest }}/nvm.sh —
+          the NVM install script was downloaded but not executed.
+
+    - name: Check .bashrc contains nvm source line
+      ansible.builtin.command: "grep -c 'source ~/.nvm/nvm.sh' /home/{{ nvm_user }}/.bashrc"
+      become: true
+      become_user: "{{ nvm_user }}"
+      register: bashrc_nvm_line
+      changed_when: false
+      failed_when: false
+
+    - name: Assert .bashrc sources nvm
+      ansible.builtin.assert:
+        that:
+          - bashrc_nvm_line.stdout | int > 0
+        fail_msg: ".bashrc at /home/{{ nvm_user }}/.bashrc does not contain 'source ~/.nvm/nvm.sh'"
+
+    - name: Check Node.js version directory exists
+      ansible.builtin.stat:
+        path: "{{ nvm_dest }}/versions/node/v{{ nvm_node_version }}"
+      register: node_dir_stat
+
+    - name: Assert Node.js version directory exists
+      ansible.builtin.assert:
+        that:
+          - node_dir_stat.stat.exists
+          - node_dir_stat.stat.isdir
+        fail_msg: >-
+          Node.js v{{ nvm_node_version }} was not installed —
+          expected directory {{ nvm_dest }}/versions/node/v{{ nvm_node_version }}
+
+    - name: Verify node binary runs and reports correct version
+      ansible.builtin.shell: "source {{ nvm_dest }}/nvm.sh && node --version"
+      args:
+        executable: /bin/bash
+      become: true
+      become_user: "{{ nvm_user }}"
+      register: node_version_output
+      changed_when: false
+
+    - name: Assert correct Node.js version is active
+      ansible.builtin.assert:
+        that:
+          - "'v' + nvm_node_version in node_version_output.stdout"
+        fail_msg: "Expected Node.js v{{ nvm_node_version }}, got: {{ node_version_output.stdout }}"

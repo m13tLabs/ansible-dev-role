@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    ansible_user: testuser
+    dev_base_manage_python: false # no Homebrew on the bare test container
+    nvm_user: testuser
+    nvm_group: testuser
+    nvm_version: "0.39.7"
+    nvm_node_version: "20.11.0"
+    nvm_working_path: /home/testuser
+    nvm_dest: /home/testuser/.nvm
+    nvm_npm_pkgs: []
+  tasks:
+    - name: Include role under test
+      ansible.builtin.include_role:
+        name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"

@@ -1,0 +1,29 @@
+---
+- name: Ensure Ansible downloads directory exists.
+  file:
+    path: "{{ downloads }}"
+    state: directory
+  tags:
+    - skip_ansible_lint
+
+- name: Ensure /etc/ansible directory exists.
+  file:
+    path: /etc/ansible
+    state: directory
+  become: true
+  tags:
+    - skip_ansible_lint
+
+- name: Rollout config
+  copy:
+    src: terminal/ansible.cfg
+    dest: /etc/ansible/ansible.cfg
+  become: true
+  tags:
+    - skip_ansible_lint
+
+- name: Ensure latest python is in place
+  community.general.homebrew:
+    name: "python@3"
+    state: present
+  when: dev_base_manage_python | default(true)

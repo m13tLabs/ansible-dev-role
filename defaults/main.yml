@@ -1,0 +1,7 @@
+---
+downloads: ~/Downloads/
+
+# The role assumes Homebrew is already present on the target (macOS, or Linux
+# with Linuxbrew installed) and just makes sure python@3 is current. Set this
+# to false on hosts (or test scenarios) that don't have brew.
+dev_base_manage_python: true

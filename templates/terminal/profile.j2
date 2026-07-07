@@ -1,0 +1,266 @@
+#
+# .profile (generic Linux/macOS base)
+#
+
+##########################
+# Terminal settings
+##########################
+# Nicer prompt.
+export PS1="\[\e[0;32m\]\]\[\] \[\e[1;32m\]\]\t \[\e[0;2m\]\]\w \[\e[0m\]\]\[$\] "
+
+##########################
+# GPG
+##########################
+git config --global commit.gpgsign true
+git config --global gpg.program gpg
+export GPG_TTY=$(tty)
+##########################
+# Go
+##########################
+export GOPATH=$HOME/go # don't forget to change your path correctly!
+export PATH=$PATH:$GOPATH/bin
+
+# CUSTOM PATHS
+export ANDROID_HOME=/usr/local/share/android-sdk
+export GIT_REPOS="$HOME/git"
+export MAVEN_OPTS="-Xmx2048m"
+export JREBEL_HOME=/opt/jrebel
+export GEM_HOME=~/.gems
+export PATH="$ANDROID_HOME/tools:$HOME/.gems/bin:$HOME/.fastlane/bin:$PATH"
+export HISTFILESIZE=5000
+export HISTSIZE=5000
+
+# ALIAS DEFINITIONS
+alias no_history='unset HISTFILE'
+alias git='LANG=en_GB git'
+alias git_amend='git add . && git commit --amend --no-edit'
+alias git_clean_branches='git branch --merged | egrep -v "(^\*|main|master|dev|develop)" | xargs git branch -d'
+
+alias python='python3'
+
+# General
+alias mci='mvn clean install'
+alias mci_3t='mvn clean install -T3'
+alias mci_no-npm='mvn clean install -DskipNode=true'
+alias mci_git='git pull --rebase && mci && git push'
+alias ncbt='npm run clean && npm run build && npm run test'
+alias ncbt_git='git pull --rebase && ncbt && git push'
+
+# Git aliases.
+alias gs='git status'
+alias gc='git commit'
+alias gp='git pull --rebase'
+alias gcam='git commit -am'
+alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+
+if test -f ~/_alias_config; then
+  source ~/_alias_config
+fi
+
+if test -f ~/_extra_config; then
+  source ~/_extra_config
+fi
+
+if test -f ~/_secrets_config; then
+  source ~/_secrets_config
+fi
+
+# Kube Helpers
+
+k8s-events() {
+  ns=$1
+  kubectlArgs=$2
+  kubectl -n $ns get event --sort-by=.metadata.creationTimestamp $kubectlArgs
+}
+
+k8s-clean-pods-failed() {
+  ns=$1
+  kubectlArgs=$2
+  kubectl -n $ns delete pod --field-selector=status.phase==Failed $kubectlArgs
+}
+
+k8s-clean-pods-completed() {
+  ns=$1
+  kubectlArgs=$2
+  kubectl -n $ns delete pod --field-selector=status.phase==Succeeded $kubectlArgs
+}
+k8s-clean-pods-not-running() {
+  ns=$1
+  kubectlArgs=$2
+  kubectl -n $ns delete pods --field-selector=status.phase!=Running $kubectlArgs
+}
+
+k8s-node-drain() {
+  node=$1
+  kubectlArgs=$2
+  kubectl drain $node --ignore-daemonsets --delete-emptydir-data $kubectlArgs
+}
+
+# LANG
+export LC_ALL=en_US.UTF-8
+
+# Git upstream branch syncer.
+# Usage: gsync master (checks out master, pull upstream, push origin).
+function gsync() {
+  if [[ ! "$1" ]]; then
+    echo "You must supply a branch."
+    return 0
+  fi
+
+  BRANCHES=$(git branch --list $1)
+  if [ ! "$BRANCHES" ]; then
+    echo "Branch $1 does not exist."
+    return 0
+  fi
+
+  git checkout "$1" &&
+    git pull upstream "$1" &&
+    git push origin "$1"
+}
+
+dot-env() {
+  local envFile="${1:-.env}"
+
+  while IFS='=' read -r key value; do
+    [[ "$key" =~ ^\s*# ]] && continue
+    [[ -z "$key" ]] && continue
+
+    # trim whitespace
+    key="$(echo "$key" | xargs)"
+    value="$(echo "$value" | sed 's/^ *//;s/ *$//')"
+
+    export "$key=$value"
+  done < "$envFile"
+}
+
+# Super useful Docker container oneshots.
+# Usage: dockrun, or dockrun [centos7|fedora27|debian9|debian8|ubuntu1404|etc.]
+dockrun() {
+  docker run -it geerlingguy/docker-"${1:-ubuntu1604}"-ansible /bin/bash
+}
+
+# Enter a running Docker container.
+function denter() {
+  if [[ ! "$1" ]]; then
+    echo "You must supply a container ID or name."
+    return 0
+  fi
+
+  docker exec -it $1 bash
+  return 0
+}
+
+load-env() {
+  eval $(cat "$@" | sed 's/^/export /')
+}
+
+# Docker image visualization (usage: `dockviz images -t`).
+alias dockviz="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
+
+# Docker shortcuts
+docker-ip() {
+  docker inspect --format '{{ '{{' }}.NetworkSettings.IPAddress{{ '}}' }}'
+  "$@"
+}
+docker-login() {
+  docker exec -it "$@" bash
+}
+
+docker-stop-all() {
+  # Stop all containers
+  docker stop $(docker ps -a -q)
+}
+
+docker-rm-all() {
+  # Stop all containers
+  docker stop $(docker ps -a -q)
+  # Delete all containers
+  docker rm -f $(docker ps -a -q)
+  # Delete all images
+  docker rmi -f $(docker images -q)
+  # Clean up volumes
+  docker volume prune
+}
+
+cordova-plugin-update-all() {
+  cordova plugins | grep -Eo '^[^ ]+' | while read line; do
+    cordova plugin remove $line
+    cordova plugin add $line
+  done
+}
+###-begin-npm-completion-###
+#
+# npm command completion script
+#
+# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
+# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
+#
+
+COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
+COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
+export COMP_WORDBREAKS
+
+if type complete &>/dev/null; then
+  _npm_completion() {
+    local si="$IFS"
+    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
+      COMP_LINE="$COMP_LINE" \
+      COMP_POINT="$COMP_POINT" \
+      npm completion -- "${COMP_WORDS[@]}" \
+      2>/dev/null)) || return $?
+    IFS="$si"
+  }
+  complete -o default -F _npm_completion npm
+elif type compdef &>/dev/null; then
+  _npm_completion() {
+    local si=$IFS
+    compadd -- $(COMP_CWORD=$((CURRENT - 1)) \
+      COMP_LINE=$BUFFER \
+      COMP_POINT=0 \
+      npm completion -- "${words[@]}" \
+      2>/dev/null)
+    IFS=$si
+  }
+  compdef _npm_completion npm
+elif type compctl &>/dev/null; then
+  _npm_completion() {
+    local cword line point words si
+    read -Ac words
+    read -cn cword
+    let cword-=1
+    read -l line
+    read -ln point
+    si="$IFS"
+    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
+      COMP_LINE="$line" \
+      COMP_POINT="$point" \
+      npm completion -- "${words[@]}" \
+      2>/dev/null)) || return $?
+    IFS="$si"
+  }
+  compctl -K _npm_completion npm
+fi
+###-end-npm-completion-###
+
+##########################
+# SSH
+##########################
+if test -f ~/_ssh_config; then
+  source ~/_ssh_config
+fi
+
+# Turn on kubectl autocomplete.
+if [ -x "$(command -v kubectl)" ]; then
+  source <(kubectl completion bash)
+fi
+
+# Ruby
+eval "$(rbenv init -)"
+
+##
+# nvm
+#
+source ~/.nvm/nvm.sh
+nvm use {{ nvm_node_version }}
+
+unset PYTHONPATH
