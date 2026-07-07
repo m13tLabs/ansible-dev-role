@@ -22,9 +22,12 @@ include:
       [ -f molecule/default/requirements.txt ] && pip install -r molecule/default/requirements.txt
       # Collections required by the molecule docker driver itself.
       ansible-galaxy collection install community.docker ansible.posix
-      # This role's own runtime dependencies (mare.nvm role, community.general collection).
-      [ -f requirements.yml ] && ansible-galaxy role install -r requirements.yml
-      [ -f requirements.yml ] && ansible-galaxy collection install -r requirements.yml
+      # This role's own runtime dependencies (mare.nvm role, community.general
+      # collection) are installed automatically by molecule from
+      # requirements.yml. This runner is a persistent shell host, so a role
+      # installed by a previous pipeline run can still be on disk; ansible-galaxy
+      # role install refuses to overwrite it without --force, so clear it first.
+      rm -rf ~/.ansible/roles/mare.nvm
       chmod -R 744 ${WORKING_DIR}
       molecule test
   after_script:
