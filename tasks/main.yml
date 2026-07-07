@@ -12,7 +12,7 @@
   tags: [dotfiles]
 
 - name: Setup nvm
-  ansible.builtin.import_role:
+  ansible.builtin.include_role:
     name: mare.nvm
   tags:
     - nodejs

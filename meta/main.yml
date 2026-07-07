@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  namespace: mare
   role_name: dev
   author: Martin Reinhardt
   description: Generic Linux/macOS developer workstation base setup

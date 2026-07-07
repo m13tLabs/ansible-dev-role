@@ -46,3 +46,8 @@ root    ALL=(ALL) ALL
 
 # Allow sudo for brew
 %admin        ALL=(ALL) NOPASSWD:/opt/homebrew/bin/brew
+
+# Read drop-in files from /etc/sudoers.d (matches the stock macOS/Debian
+# default - without this, any sudoers.d rule silently stops being honored
+# once this file replaces the system default).
+#includedir /etc/sudoers.d
