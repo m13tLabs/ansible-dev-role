@@ -1,6 +1,6 @@
 ---
 - name: Rollout .dotfiles
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: ~/
     mode: u+x,g+x,o+x
@@ -8,7 +8,7 @@
     - terminal/.vimrc
 
 - name: Rollout bash profile
-  template:
+  ansible.builtin.template:
     src: terminal/profile.j2
     dest: ~/{{ item }}
     mode: u+x,g+x,o+x
