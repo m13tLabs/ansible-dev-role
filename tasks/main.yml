@@ -1,4 +1,16 @@
 ---
+
+# Runs before dotfiles.yml so nvm_node_version (and mare.nvm's other
+# defaults) are already resolved by the time the bash profile is
+# templated - the template embeds lines mare.nvm also manages, and both
+# need to agree on the same value.
+- name: Setup nvm
+  ansible.builtin.include_role:
+    name: mare.nvm
+  tags:
+    - nodejs
+    - nvm
+
 - name: Setup Ansible
   ansible.builtin.include_tasks: ansible-setup.yml
   tags: [ansible]
