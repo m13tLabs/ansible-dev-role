@@ -7,7 +7,7 @@
   with_items:
     - terminal/.vimrc
 
-- name: Ensure vim is installed 
+- name: Ensure vim is installed
   ansible.builtin.package:
     name: vim
     state: present
