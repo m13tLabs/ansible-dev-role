@@ -22,4 +22,3 @@
     mode: u+x,g+x,o+x
   with_items:
     - .bashrc
-    - .profile

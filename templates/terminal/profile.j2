@@ -255,6 +255,7 @@ fi
 ##########################
 # SSH
 ##########################
+eval `ssh-agent -s`
 if test -f ~/_ssh_config; then
   source ~/_ssh_config
 fi
@@ -268,12 +269,5 @@ fi
 if [ -x "$(command -v rbenv)" ]; then
   eval "$(rbenv init -)"
 fi
-
-##
-# nvm
-#
-source ~/.nvm/nvm.sh
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-nvm use {{ nvm_node_version }}
 
 unset PYTHONPATH
