@@ -6,10 +6,3 @@
 - name: Setup dotfiles
   ansible.builtin.include_tasks: dotfiles.yml
   tags: [dotfiles]
-
-- name: Setup nvm
-  ansible.builtin.include_role:
-    name: mare.nvm
-  tags:
-    - nodejs
-    - nvm

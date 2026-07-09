@@ -16,3 +16,9 @@ galaxy_info:
   galaxy_tags:
     - development
     - system
+
+dependencies:
+  - role: mare.nvm
+    tags:
+      - nodejs
+      - nvm

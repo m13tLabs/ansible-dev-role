@@ -25,7 +25,7 @@ top of it.
   `mare.nvm` role - both declared in [requirements.yml](requirements.yml):
 
   ```console
-  ansible-galaxy role install -r requirements.yml
+  ansible-galaxy role install -r requirements.yml -f
   ansible-galaxy collection install -r requirements.yml
   ```
 

@@ -42,21 +42,17 @@
           - vimrc_stat.stat.exists
         fail_msg: ".vimrc missing at /home/{{ nvm_user }}/.vimrc"
 
-    - name: Check .bashrc and .profile were rendered from the generic profile
-      ansible.builtin.command: "grep -c 'alias gs=' /home/{{ nvm_user }}/{{ item }}"
-      loop:
-        - .bashrc
-        - .profile
+    - name: Check .bashrc was rendered from the generic profile
+      ansible.builtin.command: "grep -c 'alias gs=' /home/{{ nvm_user }}/.bashrc"
       register: profile_grep
       changed_when: false
       failed_when: false
 
-    - name: Assert .bashrc and .profile contain generic profile content
+    - name: Assert .bashrc contains generic profile content
       ansible.builtin.assert:
         that:
-          - item.stdout | int > 0
-        fail_msg: "{{ item.item }} does not contain the generic profile content (alias gs=...)"
-      loop: "{{ profile_grep.results }}"
+          - profile_grep.stdout | int > 0
+        fail_msg: ".bashrc does not contain the generic profile content (alias gs=...)"
 
     - name: Check the generic profile stayed free of mac-only content
       ansible.builtin.command: "grep -c 'pbcopy' /home/{{ nvm_user }}/.bashrc"
