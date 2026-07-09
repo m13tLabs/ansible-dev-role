@@ -1,3 +1,11 @@
+## [0.1.2](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.1...v0.1.2) (2026-07-09)
+
+
+### Bug Fixes
+
+* Correcting bash setup ([7d600f3](https://gitlab.m13t.de/infrastructure/ansible-dev-role/commit/7d600f3e4b2c331264093c2c9abf78b3b90ade64))
+* Correcting nvm setup ([3ac1b38](https://gitlab.m13t.de/infrastructure/ansible-dev-role/commit/3ac1b38d8b1124783ba8614e9e262aab64beb481))
+* Nvm handling ([2c99b28](https://gitlab.m13t.de/infrastructure/ansible-dev-role/commit/2c99b28c31293147e2618b7dea02cf15c2818ea4))
 ## [0.1.1](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.0...v0.1.1) (2026-07-09)
 
 
