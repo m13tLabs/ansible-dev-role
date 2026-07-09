@@ -3,10 +3,6 @@
   ansible.builtin.include_tasks: ansible-setup.yml
   tags: [ansible]
 
-- name: Setup sudoers
-  ansible.builtin.include_tasks: sudoers.yml
-  tags: [sudoers]
-
 - name: Setup dotfiles
   ansible.builtin.include_tasks: dotfiles.yml
   tags: [dotfiles]

@@ -22,8 +22,19 @@
   tags:
     - skip_ansible_lint
 
-- name: Ensure latest python is in place
+- name: Ensure latest python is in place (macOS)
   community.general.homebrew:
     name: "python@3"
     state: present
-  when: dev_base_manage_python | default(true)
+  when:
+    - dev_base_manage_python | default(true)
+    - ansible_facts['os_family'] == 'Darwin'
+
+- name: Ensure latest python is in place (Linux)
+  ansible.builtin.package:
+    name: python3
+    state: present
+  become: true
+  when:
+    - dev_base_manage_python | default(true)
+    - ansible_facts['os_family'] != 'Darwin'

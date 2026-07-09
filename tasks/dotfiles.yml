@@ -7,6 +7,14 @@
   with_items:
     - terminal/.vimrc
 
+- name: Ensure vim is installed 
+  ansible.builtin.package:
+    name: vim
+    state: present
+  become: true
+  when:
+    - ansible_facts['os_family'] != 'Darwin'
+
 - name: Rollout bash profile
   ansible.builtin.template:
     src: terminal/profile.j2

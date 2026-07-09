@@ -20,6 +20,16 @@ export GPG_TTY=$(tty)
 export GOPATH=$HOME/go # don't forget to change your path correctly!
 export PATH=$PATH:$GOPATH/bin
 
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 # CUSTOM PATHS
 export ANDROID_HOME=/usr/local/share/android-sdk
 export GIT_REPOS="$HOME/git"
@@ -255,7 +265,9 @@ if [ -x "$(command -v kubectl)" ]; then
 fi
 
 # Ruby
-eval "$(rbenv init -)"
+if [ -x "$(command -v rbenv)" ]; then
+  eval "$(rbenv init -)"
+fi
 
 ##
 # nvm
