@@ -30,23 +30,6 @@
           - ansible_cfg_stat.stat.exists
         fail_msg: "/etc/ansible/ansible.cfg was not rolled out"
 
-    # sudoers.yml
-    - name: Validate /etc/sudoers with visudo
-      ansible.builtin.command: visudo -cf /etc/sudoers
-      changed_when: false
-
-    - name: Check /etc/sudoers contains our managed defaults
-      ansible.builtin.command: grep -c 'Defaults        env_reset' /etc/sudoers
-      register: sudoers_grep
-      changed_when: false
-      failed_when: false
-
-    - name: Assert /etc/sudoers was rolled out from our template
-      ansible.builtin.assert:
-        that:
-          - sudoers_grep.stdout | int > 0
-        fail_msg: "/etc/sudoers does not contain the managed 'env_reset' default"
-
     # dotfiles.yml
     - name: Check .vimrc was rolled out
       ansible.builtin.stat:

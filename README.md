@@ -13,8 +13,7 @@ top of it.
   directory exists.
 - Ensures `python@3` is up to date via Homebrew (skip on hosts without brew,
   see [Role Variables](#role-variables)).
-- Rolls out a sudoers configuration (validated with `visudo` before it's
-  written).
+
 - Rolls out `.vimrc` and a generic bash profile (`.bashrc`/`.profile`) with
   portable git/docker/kubectl/npm tooling - no macOS-only paths or binaries.
 - Installs Node.js via [mare.nvm](https://gitlab.m13t.de/infrastructure/ansible-nvm-role).
@@ -36,7 +35,7 @@ top of it.
 | - | - | - |
 | `downloads` | `~/Downloads/` | Directory ensured to exist. |
 | `dev_base_manage_python` | `true` | Set to `false` on hosts without Homebrew (e.g. plain Linux, CI containers). |
-| `sed_path` | auto-detected | Path to `sed`, used by the sudoers task; only computed if left undefined. |
+
 
 `mare.nvm`'s own variables (`nvm_user`, `nvm_group`, `nvm_working_path`,
 `nvm_dest`, `nvm_version`, `nvm_node_version`, `nvm_npm_pkgs`, ...) are passed
@@ -55,7 +54,7 @@ through as-is - see that role's README for details.
 ## Testing
 
 Tests run via [molecule](https://molecule.readthedocs.io/) against a Debian
-container, exercising the role's actual tasks (ansible.cfg/sudoers/dotfiles
+container, exercising the role's actual tasks (ansible.cfg/dotfiles
 rollout, plus a real `mare.nvm` install/verify) rather than just a syntax
 check. `dev_base_manage_python` is set to `false` in
 `molecule/default/converge.yml` since the test container has no Homebrew.
