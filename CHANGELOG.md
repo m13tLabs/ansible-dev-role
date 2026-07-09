@@ -1,3 +1,9 @@
+## [0.1.1](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.0...v0.1.1) (2026-07-09)
+
+
+### Bug Fixes
+
+* Adjust tests ([2dea759](https://gitlab.m13t.de/infrastructure/ansible-dev-role/commit/2dea7598ccb780a8302c37b74e8b2dd16c4f32e9))
 # 0.1.0 (2026-07-07)
 
 
