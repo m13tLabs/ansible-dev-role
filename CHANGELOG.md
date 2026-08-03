@@ -1,3 +1,4 @@
+## [0.1.5](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.4...v0.1.5) (2026-08-03)
 ## [0.1.4](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.3...v0.1.4) (2026-08-03)
 
 
