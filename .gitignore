@@ -18,3 +18,7 @@ ansible/*.retry
 
 # Molecule test reports
 molecule/**/reports/
+
+# Ansible Galaxy role dependencies
+.imported-roles
+collections
