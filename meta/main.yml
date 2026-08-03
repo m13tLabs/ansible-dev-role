@@ -16,3 +16,8 @@ galaxy_info:
   galaxy_tags:
     - development
     - system
+dependencies:
+  - name: mare.nvm
+    src: ssh://git@gitlab.m13t.de:7525/infrastructure/ansible-nvm-role.git
+    scm: git
+    version: v1.0.6
