@@ -1,3 +1,9 @@
+## [0.1.3](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.2...v0.1.3) (2026-08-03)
+
+
+### Bug Fixes
+
+* Correcting nvm version ([090b966](https://gitlab.m13t.de/infrastructure/ansible-dev-role/commit/090b966930e0e3b1a98e0511a10bc882557c00f1))
 ## [0.1.2](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.1...v0.1.2) (2026-07-09)
 
 
