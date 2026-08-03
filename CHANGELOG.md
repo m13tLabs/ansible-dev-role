@@ -1,3 +1,9 @@
+## [0.1.4](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.3...v0.1.4) (2026-08-03)
+
+
+### Bug Fixes
+
+* Correcting var export ([7d0bf9e](https://gitlab.m13t.de/infrastructure/ansible-dev-role/commit/7d0bf9eb684f8a85f8ed684b2a2b510b53065d44))
 ## [0.1.3](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.2...v0.1.3) (2026-08-03)
 
 
