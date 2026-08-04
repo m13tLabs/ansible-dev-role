@@ -1,0 +1,15 @@
+---
+argument_specs:
+  main:
+    short_description: Check also the depending roles for their argument specifications.
+    options:
+      dev_base_manage_python:
+        description: Set to `false` on hosts without Homebrew (e.g. plain Linux, CI containers).
+        type: bool
+        default: true
+        version_added: 1.0.0
+      downloads:
+        description: Configuration value for downloads
+        type: str
+        default: ~/Downloads/
+        version_added: 1.0.0

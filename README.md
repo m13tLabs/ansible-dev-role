@@ -29,29 +29,50 @@ top of it.
   ansible-galaxy collection install -r requirements.yml
   ```
 
-## Role Variables
+# Usage
 
-| Variable | Default | Description |
-| - | - | - |
-| `downloads` | `~/Downloads/` | Directory ensured to exist. |
-| `dev_base_manage_python` | `true` | Set to `false` on hosts without Homebrew (e.g. plain Linux, CI containers). |
+<!-- ANSIBLE DOCSMITH MAIN START -->
+
+## Role variables<a id="variables"></a>
+
+Check also the depending roles for their argument specifications.
+
+The following variables can be configured for this role:
+
+| Variable | Type | Required | Default | Description (abstract) |
+|----------|------|----------|---------|------------------------|
+| `dev_base_manage_python` | `bool` | No | `true` | Set to `false` on hosts without Homebrew (e.g. plain Linux, CI containers). |
+| `downloads` | `str` | No | `"~/Downloads/"` | Configuration value for downloads |
+
+### `dev_base_manage_python`<a id="variable-dev_base_manage_python"></a>
+
+[*⇑ Back to ToC ⇑*](#toc)
+
+Set to `false` on hosts without Homebrew (e.g. plain Linux, CI containers).
+
+- **Type**: `bool`
+- **Required**: No
+- **Default**: `true`
 
 
-`mare.nvm`'s own variables (`nvm_user`, `nvm_group`, `nvm_working_path`,
-`nvm_dest`, `nvm_version`, `nvm_node_version`, `nvm_npm_pkgs`, ...) are passed
-through as-is - see that role's README for details.
 
-## Example Playbook
+### `downloads`<a id="variable-downloads"></a>
 
-```yaml
-- hosts: workstations
-  roles:
-    - role: mare.dev
-      vars:
-        dev_base_manage_python: false # no Homebrew on this host
-```
+[*⇑ Back to ToC ⇑*](#toc)
 
-## Testing
+Configuration value for downloads
+
+- **Type**: `str`
+- **Required**: No
+- **Default**: `"~/Downloads/"`
+
+
+
+
+<!-- ANSIBLE DOCSMITH MAIN END -->
+
+
+# Testing
 
 Tests run via [molecule](https://molecule.readthedocs.io/) against a Debian
 container, exercising the role's actual tasks (ansible.cfg/dotfiles
@@ -69,11 +90,3 @@ molecule test
 
 This is also what the `Molecule test` job in `.gitlab-ci.yml` runs on every
 pipeline.
-
-## License
-
-MIT
-
-## Author
-
-Martin Reinhardt

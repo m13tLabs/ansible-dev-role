@@ -1,7 +1,15 @@
 ---
+
+# Configuration value for downloads
+#
+# - Type: str
+# - Required: No
+# - Default: ~/Downloads/
 downloads: ~/Downloads/
 
-# The role assumes Homebrew is already present on the target (macOS, or Linux
-# with Linuxbrew installed) and just makes sure python@3 is current. Set this
-# to false on hosts (or test scenarios) that don't have brew.
+# Set to `false` on hosts without Homebrew (e.g. plain Linux, CI containers).
+#
+# - Type: bool
+# - Required: No
+# - Default: true
 dev_base_manage_python: true
