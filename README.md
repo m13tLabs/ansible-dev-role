@@ -35,8 +35,6 @@ top of it.
 
 ## Role variables<a id="variables"></a>
 
-Check also the depending roles for their argument specifications.
-
 The following variables can be configured for this role:
 
 | Variable | Type | Required | Default | Description (abstract) |
