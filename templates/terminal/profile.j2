@@ -161,10 +161,6 @@ function denter() {
   return 0
 }
 
-load-env() {
-  eval $(cat "$@" | sed 's/^/export /')
-}
-
 # Docker image visualization (usage: `dockviz images -t`).
 alias dockviz="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz"
 
