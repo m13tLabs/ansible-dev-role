@@ -6,7 +6,7 @@
 # need to agree on the same value.
 - name: Setup nvm
   ansible.builtin.include_role:
-    name: mare.nvm
+    name: m13tlabs.nvm
     public: true
   tags:
     - nodejs

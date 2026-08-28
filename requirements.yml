@@ -1,8 +1,6 @@
 ---
 roles:
-  - name: mare.nvm
-    src: ssh://git@gitlab.m13t.de:7525/infrastructure/ansible-nvm-role.git
-    scm: git
-    version: v1.0.7
+  - name: m13tlabs.nvm
+    version: v1.1.0
 collections:
   - name: community.general
