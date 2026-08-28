@@ -1,4 +1,8 @@
-# mare.dev
+# ansible-dev-role
+
+[![Ansible Galaxy](https://img.shields.io/badge/galaxy-m13tlabs.dev-660198?logo=ansible)](https://galaxy.ansible.com/ui/standalone/roles/m13tlabs/dev/)
+[![CI](https://github.com/m13tLabs/ansible-dev-role/actions/workflows/ci.yml/badge.svg)](https://github.com/m13tLabs/ansible-dev-role/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 Generic Linux/macOS developer workstation base setup. This role only contains
 mechanics that behave identically on Linux and macOS - it has no
@@ -16,13 +20,13 @@ top of it.
 
 - Rolls out `.vimrc` and a generic bash profile (`.bashrc`/`.profile`) with
   portable git/docker/kubectl/npm tooling - no macOS-only paths or binaries.
-- Installs Node.js via [mare.nvm](https://gitlab.m13t.de/infrastructure/ansible-nvm-role).
+- Installs Node.js via [m13tlabs.nvm](https://github.com/m13tLabs/ansible-nvm-role).
 
 ## Requirements
 
 - Ansible >= 2.5
 - The `community.general` collection (for the `homebrew` module) and the
-  `mare.nvm` role - both declared in [requirements.yml](requirements.yml):
+  `m13tlabs.nvm` role - both declared in [requirements.yml](requirements.yml):
 
   ```console
   ansible-galaxy role install -r requirements.yml -f
@@ -74,7 +78,7 @@ Configuration value for downloads
 
 Tests run via [molecule](https://molecule.readthedocs.io/) against a Debian
 container, exercising the role's actual tasks (ansible.cfg/dotfiles
-rollout, plus a real `mare.nvm` install/verify) rather than just a syntax
+rollout, plus a real `m13tlabs.nvm` install/verify) rather than just a syntax
 check. `dev_base_manage_python` is set to `false` in
 `molecule/default/converge.yml` since the test container has no Homebrew.
 
@@ -86,5 +90,6 @@ ansible-galaxy collection install -r requirements.yml
 molecule test
 ```
 
-This is also what the `Molecule test` job in `.gitlab-ci.yml` runs on every
-pipeline.
+This is also what the `CI` job in
+[.github/workflows/ci.yml](.github/workflows/ci.yml) runs on every push and
+pull request.

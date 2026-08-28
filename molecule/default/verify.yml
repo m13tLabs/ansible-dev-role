@@ -66,7 +66,7 @@
           - mac_only_grep.stdout | int == 0
         fail_msg: ".bashrc unexpectedly contains mac-only content (pbcopy) - this role should only ship the generic profile"
 
-    # mare.nvm (imported role)
+    # m13tlabs.nvm (imported role)
     - name: Check .nvm directory exists
       ansible.builtin.stat:
         path: "{{ nvm_dest }}"

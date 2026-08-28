@@ -1,0 +1,11 @@
+name: Release Role to Ansible Galaxy
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  release:
+    uses: m13tLabs/gh-actions-templates/.github/workflows/ansible-role-galaxy.yml@main
+    secrets: inherit

@@ -1,9 +1,10 @@
 ---
 galaxy_info:
-  namespace: mare
+  namespace: m13tlabs
   role_name: dev
-  author: Martin Reinhardt
+  author: Martin Reinhardt, <martin@m13t>
   description: Generic Linux/macOS developer workstation base setup
+  company: m13t
   min_ansible_version: "2.5"
   license: MIT
   platforms:
@@ -16,8 +17,7 @@ galaxy_info:
   galaxy_tags:
     - development
     - system
-dependencies:
-  - name: mare.nvm
-    src: ssh://git@gitlab.m13t.de:7525/infrastructure/ansible-nvm-role.git
-    scm: git
-    version: v1.0.7
+
+# Runtime dependency (m13tlabs.nvm) is declared in requirements.yml, which is
+# the canonical source consumers install from - see README.
+dependencies: []

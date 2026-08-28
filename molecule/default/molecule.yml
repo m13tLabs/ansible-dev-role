@@ -14,7 +14,7 @@ provisioner:
   env:
     # Include this project's own parent dir (so the role under test resolves
     # by its checkout directory name) alongside the default galaxy roles dir
-    # (so the mare.nvm dependency installed via `requirements.yml` resolves).
+    # (so the m13tlabs.nvm dependency installed via `requirements.yml` resolves).
     ANSIBLE_ROLES_PATH: "${MOLECULE_PROJECT_DIRECTORY}/..:~/.ansible/roles"
     ANSIBLE_CALLBACKS_ENABLED: "junit"
     JUNIT_OUTPUT_DIR: "${MOLECULE_SCENARIO_DIRECTORY}/reports"

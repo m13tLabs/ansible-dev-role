@@ -1,0 +1,11 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+
+jobs:
+  ci:
+    uses: m13tLabs/gh-actions-templates/.github/workflows/ansible-role-ci.yml@main

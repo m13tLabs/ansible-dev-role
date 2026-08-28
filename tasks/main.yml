@@ -1,9 +1,11 @@
 ---
 
-# Runs before dotfiles.yml so nvm_node_version (and mare.nvm's other
+# Runs before dotfiles.yml so nvm_node_version (and m13tlabs.nvm's other
 # defaults) are already resolved by the time the bash profile is
-# templated - the template embeds lines mare.nvm also manages, and both
-# need to agree on the same value.
+# templated - the template embeds lines m13tlabs.nvm also manages, and both
+# need to agree on the same value. public: true is required here since
+# include_role defaults otherwise stay scoped to the included role's own
+# tasks and wouldn't reach dotfiles.yml.
 - name: Setup nvm
   ansible.builtin.include_role:
     name: m13tlabs.nvm
