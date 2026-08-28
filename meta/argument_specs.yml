@@ -1,9 +1,10 @@
 ---
 argument_specs:
   main:
+    short_description: Auto-generated from defaults/main.yml
     options:
       dev_base_manage_python:
-        description: Set to `false` on hosts without Homebrew (e.g. plain Linux, CI containers).
+        description: Base directory path (enabled by default)
         type: bool
         default: true
         version_added: 1.0.0

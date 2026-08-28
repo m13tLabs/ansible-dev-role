@@ -39,18 +39,20 @@ top of it.
 
 ## Role variables<a id="variables"></a>
 
+Auto-generated from defaults/main.yml
+
 The following variables can be configured for this role:
 
 | Variable | Type | Required | Default | Description (abstract) |
 |----------|------|----------|---------|------------------------|
-| `dev_base_manage_python` | `bool` | No | `true` | Set to `false` on hosts without Homebrew (e.g. plain Linux, CI containers). |
+| `dev_base_manage_python` | `bool` | No | `true` | Base directory path (enabled by default) |
 | `downloads` | `str` | No | `"~/Downloads/"` | Configuration value for downloads |
 
 ### `dev_base_manage_python`<a id="variable-dev_base_manage_python"></a>
 
 [*⇑ Back to ToC ⇑*](#toc)
 
-Set to `false` on hosts without Homebrew (e.g. plain Linux, CI containers).
+Base directory path (enabled by default)
 
 - **Type**: `bool`
 - **Required**: No
