@@ -13,9 +13,11 @@ provisioner:
   name: ansible
   env:
     # Include this project's own parent dir (so the role under test resolves
-    # by its checkout directory name) alongside the default galaxy roles dir
-    # (so the m13tlabs.nvm dependency installed via `requirements.yml` resolves).
-    ANSIBLE_ROLES_PATH: "${MOLECULE_PROJECT_DIRECTORY}/..:~/.ansible/roles"
+    # by its checkout directory name) alongside .imported-roles (where
+    # ansible.cfg's roles_path makes `ansible-galaxy role install -r
+    # requirements.yml` put the m13tlabs.nvm dependency) and the default
+    # galaxy roles dir as a fallback.
+    ANSIBLE_ROLES_PATH: "${MOLECULE_PROJECT_DIRECTORY}/..:${MOLECULE_PROJECT_DIRECTORY}/.imported-roles:~/.ansible/roles"
     ANSIBLE_CALLBACKS_ENABLED: "junit"
     JUNIT_OUTPUT_DIR: "${MOLECULE_SCENARIO_DIRECTORY}/reports"
     JUNIT_TASK_CLASS: "yes"
