@@ -4,3 +4,7 @@ roles:
     version: v1.1.0
 collections:
   - name: community.general
+  # Required by the molecule docker driver for testing only - not needed to
+  # use this role.
+  - name: community.docker
+  - name: ansible.posix
