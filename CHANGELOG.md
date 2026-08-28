@@ -1,3 +1,46 @@
+
+## [0.2.0](https://github.com/m13tLabs/ansible-dev-role/compare/...v0.2.0) (2026-08-28)
+
+### Bug Fixes
+
+* Correct include ([3961091](https://github.com/m13tLabs/ansible-dev-role/commit/396109157999fe50bf92366f6d29993a1c41b287))
+
+* Correcting linting errors ([d865b8a](https://github.com/m13tLabs/ansible-dev-role/commit/d865b8a5e3ad24f08d68457dbfcda504958bc8e6))
+
+* Correcting molecule setup ([277de3c](https://github.com/m13tLabs/ansible-dev-role/commit/277de3c3d2d7f92b34c7cb290e67e9e5d11ed604))
+
+* Adjust tests ([2dea759](https://github.com/m13tLabs/ansible-dev-role/commit/2dea7598ccb780a8302c37b74e8b2dd16c4f32e9))
+
+* Correcting bash setup ([7d600f3](https://github.com/m13tLabs/ansible-dev-role/commit/7d600f3e4b2c331264093c2c9abf78b3b90ade64))
+
+* Correcting nvm setup ([3ac1b38](https://github.com/m13tLabs/ansible-dev-role/commit/3ac1b38d8b1124783ba8614e9e262aab64beb481))
+
+* Nvm handling ([2c99b28](https://github.com/m13tLabs/ansible-dev-role/commit/2c99b28c31293147e2618b7dea02cf15c2818ea4))
+
+* Correcting nvm version ([090b966](https://github.com/m13tLabs/ansible-dev-role/commit/090b966930e0e3b1a98e0511a10bc882557c00f1))
+
+* Correcting var export ([7d0bf9e](https://github.com/m13tLabs/ansible-dev-role/commit/7d0bf9eb684f8a85f8ed684b2a2b510b53065d44))
+
+* Remove load-env helper ([d7340b0](https://github.com/m13tLabs/ansible-dev-role/commit/d7340b03134f7e58d90b56059a607558b5961241))
+
+
+
+### Documentation
+
+* Auto-Generate README ([fa0aa4d](https://github.com/m13tLabs/ansible-dev-role/commit/fa0aa4d04e67e64db198c1b12860f707d02137bd))
+
+* Auto-Generate README ([91ee12f](https://github.com/m13tLabs/ansible-dev-role/commit/91ee12fb337f80b7c9b8c8b2497758530e81e7a7))
+
+
+
+### Refactoring
+
+* Use OSS fork of nvm role ([071d7dc](https://github.com/m13tLabs/ansible-dev-role/commit/071d7dcd1d05313ef3a4a71971f808b688ebd46d))
+
+* Move to GitHub ([e7d09c9](https://github.com/m13tLabs/ansible-dev-role/commit/e7d09c9e08f5d2095d479533c2f95c71136f3519))
+
+
+
 ## [0.1.5](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.4...v0.1.5) (2026-08-03)
 ## [0.1.4](https://gitlab.m13t.de/infrastructure/ansible-dev-role/compare/v0.1.3...v0.1.4) (2026-08-03)
 
