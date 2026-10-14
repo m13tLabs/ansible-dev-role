@@ -1,4 +1,13 @@
 
+## [1.0.0](https://github.com/m13tLabs/ansible-dev-role/compare/v0.2.0...v1.0.0) (2026-10-14)
+
+### Bug Fixes
+
+* Pass include tags on to the included tasks ([7b4180b](https://github.com/m13tLabs/ansible-dev-role/commit/7b4180b78a35b25717712d456d8e8af0cc5dafa0))
+
+
+
+
 ## [0.2.0](https://github.com/m13tLabs/ansible-dev-role/compare/...v0.2.0) (2026-08-28)
 
 ### Bug Fixes
