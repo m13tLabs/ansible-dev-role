@@ -6,18 +6,30 @@
 # need to agree on the same value. public: true is required here since
 # include_role defaults otherwise stay scoped to the included role's own
 # tasks and wouldn't reach dotfiles.yml.
+#
+# Tags on include_role/include_tasks only apply to the include task itself;
+# `apply.tags` passes them on to the included tasks, so `--tags nvm` etc.
+# actually run the included tasks instead of skipping them.
 - name: Setup nvm
   ansible.builtin.include_role:
     name: m13tlabs.nvm
     public: true
+    apply:
+      tags: [nodejs, nvm]
   tags:
     - nodejs
     - nvm
 
 - name: Setup Ansible
-  ansible.builtin.include_tasks: ansible-setup.yml
+  ansible.builtin.include_tasks:
+    file: ansible-setup.yml
+    apply:
+      tags: [ansible]
   tags: [ansible]
 
 - name: Setup dotfiles
-  ansible.builtin.include_tasks: dotfiles.yml
+  ansible.builtin.include_tasks:
+    file: dotfiles.yml
+    apply:
+      tags: [dotfiles]
   tags: [dotfiles]
