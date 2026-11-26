@@ -1,7 +1,7 @@
 ---
 roles:
   - name: m13tlabs.nvm
-    version: v1.1.0
+    version: v1.2.0
 collections:
   - name: community.general
   # Required by the molecule docker driver for testing only - not needed to
